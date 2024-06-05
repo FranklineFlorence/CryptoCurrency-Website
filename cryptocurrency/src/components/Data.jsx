@@ -1,9 +1,8 @@
-// Data.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Data.css';
 
-function Data({ setCoinList, addToWatchlist }) {
+function Data({ addToWatchlist }) {
   const [cryptoData, setCryptoData] = useState([]);
 
   useEffect(() => {
@@ -14,19 +13,16 @@ function Data({ setCoinList, addToWatchlist }) {
         );
         const data = await response.json();
         setCryptoData(data);
-        // Pass the list of coins to the parent component
-        setCoinList(data.map((crypto) => ({ id: crypto.id, name: crypto.name })));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchCryptoData();
-  }, [setCoinList]);
+  }, []);
 
-  const handleAddToWatchlist = (id) => {
-    // Call the function passed from the parent component to add the selected cryptocurrency to the watchlist
-    addToWatchlist(id);
+  const handleAddToWatchlist = (crypto) => {
+    addToWatchlist(crypto);
   };
 
   return (
@@ -44,7 +40,7 @@ function Data({ setCoinList, addToWatchlist }) {
               <th>Price (USD)</th>
               <th>Change Percent (24Hr)</th>
               <th>Details</th>
-              <th>Add to Watchlist</th> {/* New column for the button */}
+              <th>Add to Watchlist</th>
             </tr>
           </thead>
           <tbody>
@@ -61,7 +57,9 @@ function Data({ setCoinList, addToWatchlist }) {
                   <Link to={`/crypto/${crypto.id}`}>Details</Link>
                 </td>
                 <td>
-                  <button onClick={() => handleAddToWatchlist(crypto.id)}>Add</button>
+                  <button onClick={() => handleAddToWatchlist(crypto)}>
+                    Add
+                  </button>
                 </td>
               </tr>
             ))}
