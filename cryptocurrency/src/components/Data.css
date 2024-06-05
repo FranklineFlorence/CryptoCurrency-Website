@@ -1,0 +1,117 @@
+/* Root element styling */
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #1f1b24;
+  color: #fff;
+}
+
+/* Styling for the cryptocurrency data table */
+.crypto-table {
+  width: 100%;
+  margin: 0 auto; /* Center the table horizontally */
+  margin-top: 20px;
+  border-collapse: collapse;
+  color: #fff;
+  display: block; /* Establish block formatting context */
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+.crypto-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #9b59b6; /* Background color of the sticky header */
+}
+
+.crypto-table th, 
+.crypto-table td {
+  border: 1px solid #9b59b6;
+  padding: 12px;
+  text-align: center;
+}
+
+.crypto-table th {
+  background-color: #9b59b6;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.crypto-table tr:nth-child(even) {
+  background-color: #2c2833;
+}
+
+.crypto-table tr:nth-child(odd) {
+  background-color: #1f1b24;
+}
+
+.crypto-table tr:hover {
+  background-color: #9b59b6;
+  color: #fff;
+}
+
+.crypto-table img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+}
+
+/* General card styling */
+.card {
+  padding: 2em;
+  background-color: #2c2833;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* Header styling */
+.App-header {
+  background-color: #1f1b24;
+  padding: 20px;
+}
+
+.App-header h1 {
+  color: #9b59b6;
+  font-size: 2.5em;
+}
+
+/* Read the docs link styling */
+.read-the-docs {
+  color: #888;
+}
+
+/* Keyframes for logo spin animation */
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Logo styling */
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #9b59b6aa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
