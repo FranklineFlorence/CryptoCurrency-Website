@@ -1,46 +1,64 @@
-/* CryptoDetails.css */
 .crypto-details {
   text-align: center;
-  color: whitesmoke; /* Changed text color to a darker shade for better readability */
-  padding: 20px; /* Added padding for better spacing */
+  color: whitesmoke;
+  padding: 20px;
 }
 
-.crypto-details img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  margin: 20px auto; /* Centered the image horizontally */
-  display: block; /* Ensures the image is centered properly */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added a subtle shadow for depth */
+.logo-container {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 20px;
+}
+
+.logo {
+  width: 130px; /* Adjust the width as needed */
+  height: 130px; /* Adjust the height as needed */
+  animation: spin 2s linear infinite; /* Spin animation */
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg); /* Start rotation at 0 degrees */
+  }
+  to {
+    transform: rotate(360deg); /* End rotation at 360 degrees */
+  }
+}
+
+.details-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.details-box {
+  flex: 0 0 calc(25% - 20px);
+  background-color: #222;
+  border: 2px solid #ba25e8;
+  padding: 15px;
+  border-radius: 10px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.details-box:hover {
+  border-color: #ba25e8;
+  box-shadow: 0 0 20px rgba(186, 37, 232, 0.4);
 }
 
 .details {
-  margin-bottom: 20px; /* Increased bottom margin for better separation */
+  text-align: center;
+  margin-top: 10px;
+}
+
+.details p {
+  margin: 5px 0;
 }
 
 .time-granularity {
-  margin-bottom: 20px; /* Increased bottom margin for better separation */
+  margin-top: 20px;
 }
 
-.time-granularity label {
-  margin-right: 10px; /* Added spacing between label and select */
-}
-
-.time-granularity select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  color: #333; /* Adjusted select text color for better readability */
-}
-
-.historicalChartContainer {
-  width: 100%; /* Make the chart container full width */
-  display: flex;
-  justify-content: center; /* Center the chart horizontally */
-}
-
-.historicalChart {
-  max-width: 800px; /* Limit the chart's width to 800px */
-  width: 100%; /* Make the chart fill its container */
+.chart-container {
+  margin-top: 20px;
+  width: 100%;
 }

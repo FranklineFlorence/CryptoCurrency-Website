@@ -8,7 +8,7 @@ function CryptoDetails() {
   const [cryptoDetails, setCryptoDetails] = useState({});
   const [chartData, setChartData] = useState(null);
   const [chartInstance, setChartInstance] = useState(null);
-  const [timeGranularity, setTimeGranularity] = useState('hourly'); // Default to hourly
+  const [timeGranularity, setTimeGranularity] = useState('daily'); // Default to daily
 
   useEffect(() => {
     const fetchCryptoDetails = async () => {
@@ -69,9 +69,9 @@ function CryptoDetails() {
         {
           label: 'Price',
           data: values,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 2,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)', // Change the background color
+          borderColor: '#ba25e8',
+          borderWidth: 1.5,
         },
       ],
     };
@@ -115,22 +115,39 @@ function CryptoDetails() {
 
   return (
     <div className="crypto-details">
-      <h1>{cryptoDetails.name}</h1>
-      <img src={cryptoDetails.image?.large} alt={cryptoDetails.name} />
-      <div className="details">
-        <p>Current Price: ${cryptoDetails.market_data?.current_price?.usd}</p>
-        <p>Market Cap: ${cryptoDetails.market_data?.market_cap?.usd}</p>
-        <p>24h Volume: ${cryptoDetails.market_data?.total_volume?.usd}</p>
+      <h1 style={{ textTransform: 'uppercase' }}>{cryptoDetails.name}</h1>
+      <div className="logo-container">
+        <img src={cryptoDetails.image?.large} alt={cryptoDetails.name} className="logo" />
+      </div>
+      <div className="details-container">
+        <div className="details-box">
+          <h2 style={{ fontWeight: 'bold', color: '#ba25e8' }}>CURRENT PRICE</h2>
+          <div className="details">
+            <p>${cryptoDetails.market_data?.current_price?.usd}</p>
+          </div>
+        </div>
+        <div className="details-box">
+          <h2 style={{ fontWeight: 'bold', color: '#ba25e8' }}>MARKET CAP</h2>
+          <div className="details">
+            <p>${cryptoDetails.market_data?.market_cap?.usd}</p>
+          </div>
+        </div>
+        <div className="details-box">
+          <h2 style={{ fontWeight: 'bold', color: '#ba25e8' }}>24H VOLUME</h2>
+          <div className="details">
+            <p>${cryptoDetails.market_data?.total_volume?.usd}</p>
+          </div>
+        </div>
       </div>
       <div className="time-granularity">
-        <label htmlFor="timeGranularity">Time Granularity:</label>
+        <p style={{ fontWeight: 'bold' }}>TIME FRAME</p>
         <select id="timeGranularity" value={timeGranularity} onChange={handleTimeGranularityChange}>
-          <option value="hourly">Hourly</option>
-          <option value="daily">Daily</option>
-          <option value="weekly">Weekly</option>
+          <option value="hourly">HOURLY</option>
+          <option value="daily">DAILY</option>
+          <option value="weekly">WEEKLY</option>
         </select>
       </div>
-      <div id="historicalChartContainer">
+      <div className="chart-container">
         <canvas id="historicalChart"></canvas>
       </div>
     </div>
