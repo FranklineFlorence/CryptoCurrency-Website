@@ -11,8 +11,8 @@
 }
 
 .logo {
-  width: 130px; /* Adjust the width as needed */
-  height: 130px; /* Adjust the height as needed */
+  width: 120px; /* Adjust the width as needed */
+  height: 120px; /* Adjust the height as needed */
   animation: spin 2s linear infinite; /* Spin animation */
 }
 
