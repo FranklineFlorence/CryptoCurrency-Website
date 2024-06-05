@@ -68,6 +68,7 @@
 }
 
 .additional-info {
+  margin-top: 40px;
   text-align: center;
   background-color: #2f2f2f;
   border: 1px solid #ba25e8;
@@ -83,4 +84,53 @@
 
 .additional-info p {
   font-size: 1.2em;
+}
+
+/* Add styles for the news section */
+.news-section {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #2f2f2f;
+  border: 1px solid #ba25e8;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+}
+
+.news-section h2 {
+  font-size: 2em;
+  color: #ba25e8;
+  margin-bottom: 20px;
+}
+
+.news-container {
+  display: grid;
+  gap: 20px;
+}
+
+.news-article {
+  background-color: #222;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.news-article h3 {
+  font-size: 1.2em;
+  color: #ddd;
+  margin-bottom: 10px;
+}
+
+.news-article p {
+  font-size: 1em;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.news-article a {
+  color: #ba25e8;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.news-article a:hover {
+  text-decoration: underline;
 }
