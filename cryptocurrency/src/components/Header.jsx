@@ -8,13 +8,13 @@ import './Header.css';
 function Header() {
   return (
     <header className="App-header">
-      <h1>CryptoVerse</h1>
+      <h1>CRYPTOVERSE</h1>
       <nav>
-        <Link to="/">Home</Link>
-        <Link to="/data">Data</Link>
-        <Link to="/visual">Visual</Link>
-        <Link to="/watchlist">Watchlist</Link>
-        <Link to="/convert">Converter</Link> {/* Add link to CryptoConverter */}
+        <Link to="/">HOME</Link>
+        <Link to="/data">DATA</Link>
+        <Link to="/visual">VISUAL</Link>
+        <Link to="/watchlist">WATCHLIST</Link>
+        <Link to="/convert">ANALYTICS</Link> {/* Add link to CryptoConverter */}
       </nav>
     </header>
   );
