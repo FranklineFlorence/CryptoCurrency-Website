@@ -1,17 +1,14 @@
-// CryptoDetails.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Chart from 'chart.js/auto';
 import './CryptoDetails.css';
 
-/**
- * CryptoDetails component that fetches and displays detailed information about a specific cryptocurrency.
- * @returns {JSX.Element} The rendered component.
- */
 function CryptoDetails() {
   const { id } = useParams();
   const [cryptoDetails, setCryptoDetails] = useState({});
   const [chartData, setChartData] = useState(null);
+  const [chartInstance, setChartInstance] = useState(null);
+  const [timeGranularity, setTimeGranularity] = useState('hourly'); // Default to hourly
 
   useEffect(() => {
     const fetchCryptoDetails = async () => {
@@ -27,26 +24,43 @@ function CryptoDetails() {
     fetchCryptoDetails();
   }, [id]);
 
-  useEffect(() => {
-    if (cryptoDetails.market_data) {
-      const fetchHistoricalData = async () => {
-        try {
-          const response = await fetch(
-            `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=30&interval=daily`
-          );
-          const data = await response.json();
-          setChartData(processHistoricalData(data.prices));
-        } catch (error) {
-          console.error('Error fetching historical data:', error);
-        }
-      };
-
-      fetchHistoricalData();
+  const fetchHistoricalData = async (granularity) => {
+    let interval;
+    if (granularity === 'hourly') {
+      interval = 'hourly';
+    } else if (granularity === 'daily') {
+      interval = 'daily';
+    } else {
+      interval = 'weekly';
     }
-  }, [cryptoDetails]);
 
-  const processHistoricalData = (prices) => {
-    const labels = prices.map((entry) => new Date(entry[0]).toLocaleDateString());
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=365&interval=${interval}`
+      );
+      const data = await response.json();
+      setChartData(processHistoricalData(data.prices, granularity));
+    } catch (error) {
+      console.error('Error fetching historical data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistoricalData(timeGranularity);
+  }, [id, timeGranularity]);
+
+  const processHistoricalData = (prices, granularity) => {
+    if (!prices || !Array.isArray(prices)) return null;
+
+    let labels;
+    if (granularity === 'hourly') {
+      labels = prices.map((entry) => new Date(entry[0]).toLocaleTimeString());
+    } else if (granularity === 'daily') {
+      labels = prices.map((entry) => new Date(entry[0]).toLocaleDateString());
+    } else {
+      labels = prices.map((entry) => new Date(entry[0]).toLocaleDateString());
+    }
+
     const values = prices.map((entry) => entry[1]);
 
     return {
@@ -64,9 +78,12 @@ function CryptoDetails() {
   };
 
   useEffect(() => {
+    if (chartInstance) {
+      chartInstance.destroy();
+    }
     if (chartData) {
       const ctx = document.getElementById('historicalChart').getContext('2d');
-      new Chart(ctx, {
+      const newChartInstance = new Chart(ctx, {
         type: 'line',
         data: chartData,
         options: {
@@ -74,13 +91,27 @@ function CryptoDetails() {
           maintainAspectRatio: false,
           scales: {
             y: {
-              suggestedMin: 0,
+              suggestedMin: Math.min(...chartData.datasets[0].data) - 10,
+              ticks: {
+                stepSize: 100, // Adjust the step size for the y-axis ticks
+                beginAtZero: true,
+              },
+            },
+          },
+          plugins: {
+            legend: {
+              display: false,
             },
           },
         },
       });
+      setChartInstance(newChartInstance);
     }
   }, [chartData]);
+
+  const handleTimeGranularityChange = (event) => {
+    setTimeGranularity(event.target.value);
+  };
 
   return (
     <div className="crypto-details">
@@ -91,10 +122,17 @@ function CryptoDetails() {
         <p>Market Cap: ${cryptoDetails.market_data?.market_cap?.usd}</p>
         <p>24h Volume: ${cryptoDetails.market_data?.total_volume?.usd}</p>
       </div>
-      <div style={{ width: '800px', height: '400px' }}>
+      <div className="time-granularity">
+        <label htmlFor="timeGranularity">Time Granularity:</label>
+        <select id="timeGranularity" value={timeGranularity} onChange={handleTimeGranularityChange}>
+          <option value="hourly">Hourly</option>
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+        </select>
+      </div>
+      <div id="historicalChartContainer">
         <canvas id="historicalChart"></canvas>
       </div>
-      <button className="watchlist-button">Add to Watchlist</button>
     </div>
   );
 }

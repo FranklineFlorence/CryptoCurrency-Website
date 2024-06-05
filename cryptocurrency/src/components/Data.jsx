@@ -49,6 +49,13 @@ function Data({ addToWatchlist, watchlist = [] }) {
 
   const handleAddToWatchlist = (crypto) => {
     addToWatchlist(crypto);
+    toast.success(`${crypto.name} added to watchlist!`);
+  };
+
+  const handleRemoveFromWatchlist = (crypto) => {
+    const updatedWatchlist = watchlist.filter((item) => item.id !== crypto.id);
+    addToWatchlist(updatedWatchlist);
+    toast.info(`${crypto.name} removed from watchlist.`);
   };
 
   const handleThresholdChange = (event, cryptoId) => {
@@ -123,9 +130,15 @@ function Data({ addToWatchlist, watchlist = [] }) {
                   <Link to={`/crypto/${crypto.id}`}>Details</Link>
                 </td>
                 <td>
-                  <button onClick={() => handleAddToWatchlist(crypto)}>
-                    {isInWatchlist(crypto) ? 'Added' : 'Add'}
-                  </button>
+                  {isInWatchlist(crypto) ? (
+                    <button onClick={() => handleRemoveFromWatchlist(crypto)}>
+                      Remove
+                    </button>
+                  ) : (
+                    <button onClick={() => handleAddToWatchlist(crypto)}>
+                      Add
+                    </button>
+                  )}
                 </td>
                 <td>
                   <input
@@ -141,11 +154,11 @@ function Data({ addToWatchlist, watchlist = [] }) {
             ))}
           </tbody>
         </table>
-      ) : (
-        <p>Data cannot be loaded...</p>
-      )}
-    </div>
-  );
+    ) : (
+      <p>Data cannot be loaded...</p>
+    )}
+  </div>
+);
 }
 
-export default Data;          
+export default Data;
