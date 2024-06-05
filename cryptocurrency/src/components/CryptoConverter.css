@@ -108,7 +108,7 @@
   height: 200px;
   margin-top: 10px;
   transition: transform 0.5s ease;
-  animation: spin 4s infinite linear;
+  animation: spin 2s infinite linear;
 }
 
 @keyframes spin {
