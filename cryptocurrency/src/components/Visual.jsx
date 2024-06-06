@@ -17,7 +17,8 @@ function Visual() {
   useEffect(() => {
     const fetchCryptoList = async () => {
       try {
-        const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false');
+        const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.coingecko.com/api/v3/coins/${selectedCrypto}`);
+
         const data = response.data;
         setCryptoList(data);
       } catch (error) {
@@ -31,7 +32,7 @@ function Visual() {
   useEffect(() => {
     const fetchCryptoDetails = async () => {
       try {
-        const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${selectedCrypto}`);
+        const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.coingecko.com/api/v3/coins/${selectedCrypto}`);
         const data = response.data;
         setCryptoDetails(data);
       } catch (error) {
@@ -54,7 +55,7 @@ function Visual() {
 
     try {
       const response = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${selectedCrypto}/market_chart?vs_currency=usd&days=365&interval=${interval}`
+        `https://cors-anywhere.herokuapp.com/https://api.coingecko.com/api/v3/coins/${selectedCrypto}/market_chart?vs_currency=usd&days=365&interval=${interval}`
       );
       const data = response.data;
       setChartData(processHistoricalData(data.prices, granularity));

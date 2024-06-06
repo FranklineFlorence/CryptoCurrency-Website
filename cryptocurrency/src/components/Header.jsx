@@ -15,6 +15,7 @@ function Header() {
         <Link to="/visual">VISUAL</Link>
         <Link to="/watchlist">WATCHLIST</Link>
         <Link to="/convert">ANALYTICS</Link>
+        <Link to="/market-depth">MARKET DEPTH</Link> {/* Link to Market Depth Analysis Page */}
         <Link to="/profile">PROFILE</Link> {/* Link to User Profile Page */}
         <Link to="/login">LOGIN</Link> {/* Link to Login/Register Page */}
       </nav>

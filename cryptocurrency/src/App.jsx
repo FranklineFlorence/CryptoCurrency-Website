@@ -10,6 +10,7 @@ import CryptoDetails from './components/CryptoDetails';
 import CryptoConverter from './components/CryptoConverter';
 import UserProfilePage from './components/UserProfilePage';
 import LoginRegisterPage from './components/LoginRegisterPage';
+import MarketDepthAnalysis from './components/MarketDepthAnalysis'; // Import the MarketDepthAnalysis component
 import './App.css';
 import { NotificationProvider } from './components/NotificationContext';
 import { AuthProvider } from './components/AuthContext';
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/profile" element={<UserProfilePage />} />
                 <Route path="/login" element={<LoginRegisterPage />} />
                 <Route path="/register" element={<LoginRegisterPage />} />
+                <Route path="/market-depth" element={<MarketDepthAnalysis />} />
               </Routes>
             </main>
           </div>
