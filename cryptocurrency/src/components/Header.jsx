@@ -14,7 +14,9 @@ function Header() {
         <Link to="/data">DATA</Link>
         <Link to="/visual">VISUAL</Link>
         <Link to="/watchlist">WATCHLIST</Link>
-        <Link to="/convert">ANALYTICS</Link> {/* Add link to CryptoConverter */}
+        <Link to="/convert">ANALYTICS</Link>
+        <Link to="/profile">PROFILE</Link> {/* Link to User Profile Page */}
+        <Link to="/login">LOGIN</Link> {/* Link to Login/Register Page */}
       </nav>
     </header>
   );
