@@ -131,11 +131,11 @@ function Data({ addToWatchlist, watchlist = [] }) {
                 </td>
                 <td>
                   {isInWatchlist(crypto) ? (
-                    <button onClick={() => handleRemoveFromWatchlist(crypto)}>
+                    <button className="remove-button" onClick={() => handleRemoveFromWatchlist(crypto)}>
                       Remove
                     </button>
                   ) : (
-                    <button onClick={() => handleAddToWatchlist(crypto)}>
+                    <button className="add-button" onClick={() => handleAddToWatchlist(crypto)}>
                       Add
                     </button>
                   )}
@@ -147,8 +147,8 @@ function Data({ addToWatchlist, watchlist = [] }) {
                     onChange={(event) => handleThresholdChange(event, crypto.id)}
                     placeholder="Set threshold"
                   />
-                  <button onClick={() => handleThresholdSubmit(crypto.id)}>Set</button>
-                  <button onClick={() => handleThresholdRemove(crypto.id)}>Remove</button>
+                  <button className="set-button" onClick={() => handleThresholdSubmit(crypto.id)}>Set</button>
+                  <button className="remove-button" onClick={() => handleThresholdRemove(crypto.id)}>Remove</button>
                 </td>
               </tr>
             ))}
