@@ -1,9 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Watchlist({ watchlist, removeFromWatchlist }) {
+
+  const handleRemoveFromWatchlist = (crypto) => {
+    removeFromWatchlist(crypto.id);
+    // Display notification using react-toastify
+    toast.info(`${crypto.name} removed from watchlist`);
+  };
+
   return (
     <div>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <h1>Your Watchlist</h1>
       <p>Manage your favorite cryptocurrencies here.</p>
       {watchlist.length > 0 ? (
@@ -35,7 +45,7 @@ function Watchlist({ watchlist, removeFromWatchlist }) {
                   <Link to={`/crypto/${crypto.id}`}>Details</Link>
                 </td>
                 <td>
-                  <button onClick={() => removeFromWatchlist(crypto.id)}>
+                  <button onClick={() => handleRemoveFromWatchlist(crypto)}>
                     Remove
                   </button>
                 </td>
