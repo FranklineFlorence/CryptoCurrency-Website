@@ -1,4 +1,3 @@
-//src/components/Visual.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Chart from 'chart.js/auto';
@@ -12,15 +11,13 @@ function Visual() {
   const [chartData, setChartData] = useState(null);
   const [chartInstance, setChartInstance] = useState(null);
   const [timeGranularity, setTimeGranularity] = useState('daily'); // Default to daily
-  const [selectedCrypto, setSelectedCrypto] = useState(id);
+  const [selectedCrypto, setSelectedCrypto] = useState('bitcoin'); // Default to Bitcoin
 
   useEffect(() => {
     const fetchCryptoList = async () => {
       try {
-        const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.coingecko.com/api/v3/coins/${selectedCrypto}`);
-
-        const data = response.data;
-        setCryptoList(data);
+        const response = await axios.get('https://api.coingecko.com/api/v3/coins/list');
+        setCryptoList(response.data);
       } catch (error) {
         console.error('Error fetching crypto list:', error);
       }
@@ -31,10 +28,10 @@ function Visual() {
 
   useEffect(() => {
     const fetchCryptoDetails = async () => {
+      if (!selectedCrypto) return;
       try {
-        const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.coingecko.com/api/v3/coins/${selectedCrypto}`);
-        const data = response.data;
-        setCryptoDetails(data);
+        const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${selectedCrypto}`);
+        setCryptoDetails(response.data);
       } catch (error) {
         console.error('Error fetching cryptocurrency details:', error);
       }
@@ -44,28 +41,47 @@ function Visual() {
   }, [selectedCrypto]);
 
   const fetchHistoricalData = async (granularity) => {
+    if (!selectedCrypto) return;
+  
     let interval;
-    if (granularity === 'hourly') {
-      interval = 'hourly';
-    } else if (granularity === 'daily') {
-      interval = 'daily';
-    } else {
-      interval = 'weekly';
+    let days = 365; // Default to 365 days
+  
+    switch (granularity) {
+      case 'hourly':
+        interval = 'daily';
+        days = 1;
+        break;
+      case 'daily':
+        interval = 'daily';
+        days = 30; // Last 30 days
+        break;
+      case 'weekly':
+        interval = 'daily';
+        days = 28; // Last 28 days
+        break;
+      case 'monthly':
+        interval = 'daily';
+        days = 30; // Last 30 days
+        break;
+      default:
+        interval = 'daily';
+        days = 365; // Last year
     }
-
+    
     try {
       const response = await axios.get(
-        `https://cors-anywhere.herokuapp.com/https://api.coingecko.com/api/v3/coins/${selectedCrypto}/market_chart?vs_currency=usd&days=365&interval=${interval}`
+        `https://api.coingecko.com/api/v3/coins/${selectedCrypto}/market_chart?vs_currency=usd&days=${days}&interval=${interval}`
       );
-      const data = response.data;
-      setChartData(processHistoricalData(data.prices, granularity));
+      setChartData(processHistoricalData(response.data.prices, interval));
     } catch (error) {
       console.error('Error fetching historical data:', error);
-    }
+    }    
   };
 
   useEffect(() => {
-    fetchHistoricalData(timeGranularity);
+    if (selectedCrypto) {
+      fetchHistoricalData(timeGranularity);
+    }
   }, [selectedCrypto, timeGranularity]);
 
   const processHistoricalData = (prices, granularity) => {
@@ -74,8 +90,6 @@ function Visual() {
     let labels;
     if (granularity === 'hourly') {
       labels = prices.map((entry) => new Date(entry[0]).toLocaleTimeString());
-    } else if (granularity === 'daily') {
-      labels = prices.map((entry) => new Date(entry[0]).toLocaleDateString());
     } else {
       labels = prices.map((entry) => new Date(entry[0]).toLocaleDateString());
     }
@@ -168,6 +182,7 @@ function Visual() {
           <option value="hourly">HOURLY</option>
           <option value="daily">DAILY</option>
           <option value="weekly">WEEKLY</option>
+          <option value="monthly">MONTHLY</option>
         </select>
       </div>
       <div className="crypto-dropdown">
