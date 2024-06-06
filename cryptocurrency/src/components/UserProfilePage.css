@@ -1,0 +1,63 @@
+/* UserProfilePage.css */
+.user-profile-page {
+  font-family: Arial, sans-serif;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #222;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Update UserProfilePage.css */
+
+.user-info {
+  margin-bottom: 20px;
+}
+
+.info-item {
+  margin-bottom: 10px;
+}
+
+.info-item label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.info-item input {
+  width: calc(100% - 22px); /* Adjust width to accommodate padding and border */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff; /* Add this line to set background color to white */
+}
+
+.info-item input:disabled {
+  background-color: #d8d7d7; /* Override default disabled input background color */
+}
+
+.activity-history {
+  background-color: #222;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.activity-history h3 {
+  margin-bottom: 10px;
+}
+
+.activity-history ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.activity-history li {
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
