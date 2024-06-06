@@ -10,22 +10,15 @@ import CryptoDetails from './components/CryptoDetails';
 import CryptoConverter from './components/CryptoConverter';
 import './App.css';
 
-/**
- * App component that serves as the root component of the application.
- * It includes the header and routing to different pages.
- */
 function App() {
-  // State to store the watchlist
   const [watchlist, setWatchlist] = useState([]);
 
-  // Function to add a cryptocurrency to the watchlist
   const addToWatchlist = (crypto) => {
     if (!watchlist.find((item) => item.id === crypto.id)) {
       setWatchlist([...watchlist, crypto]);
     }
   };
 
-  // Function to remove a cryptocurrency from the watchlist
   const removeFromWatchlist = (id) => {
     setWatchlist(watchlist.filter((crypto) => crypto.id !== id));
   };

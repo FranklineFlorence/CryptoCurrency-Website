@@ -1,92 +1,184 @@
-// Visual.jsx
-import React, { useState, useEffect } from 'react';
+//src/components/Visual.jsx
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Chart from 'chart.js/auto';
+import axios from 'axios';
+import './Visual.css';
 
-function Visual({ coinList }) {
+function Visual() {
+  const { id } = useParams();
+  const [cryptoList, setCryptoList] = useState([]);
+  const [cryptoDetails, setCryptoDetails] = useState({});
   const [chartData, setChartData] = useState(null);
-  const [selectedCoin, setSelectedCoin] = useState('bitcoin'); // Default selected coin
+  const [chartInstance, setChartInstance] = useState(null);
+  const [timeGranularity, setTimeGranularity] = useState('daily'); // Default to daily
+  const [selectedCrypto, setSelectedCrypto] = useState(id);
 
   useEffect(() => {
-    fetchHistoricalData(selectedCoin);
-  }, [selectedCoin]);
-
-  const fetchHistoricalData = async (coin) => {
-    try {
-      const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=30&interval=daily`
-      );
-      const data = await response.json();
-
-      if (data.prices.length === 0) {
-        console.error('No historical data fetched');
-        return;
+    const fetchCryptoList = async () => {
+      try {
+        const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false');
+        const data = response.data;
+        setCryptoList(data);
+      } catch (error) {
+        console.error('Error fetching crypto list:', error);
       }
+    };
 
-      setChartData(processHistoricalData(data.prices));
+    fetchCryptoList();
+  }, []);
+
+  useEffect(() => {
+    const fetchCryptoDetails = async () => {
+      try {
+        const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${selectedCrypto}`);
+        const data = response.data;
+        setCryptoDetails(data);
+      } catch (error) {
+        console.error('Error fetching cryptocurrency details:', error);
+      }
+    };
+
+    fetchCryptoDetails();
+  }, [selectedCrypto]);
+
+  const fetchHistoricalData = async (granularity) => {
+    let interval;
+    if (granularity === 'hourly') {
+      interval = 'hourly';
+    } else if (granularity === 'daily') {
+      interval = 'daily';
+    } else {
+      interval = 'weekly';
+    }
+
+    try {
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/${selectedCrypto}/market_chart?vs_currency=usd&days=365&interval=${interval}`
+      );
+      const data = response.data;
+      setChartData(processHistoricalData(data.prices, granularity));
     } catch (error) {
       console.error('Error fetching historical data:', error);
     }
   };
 
-  const processHistoricalData = (prices) => {
-    const labels = prices.map((entry) => new Date(entry[0]).toLocaleDateString());
+  useEffect(() => {
+    fetchHistoricalData(timeGranularity);
+  }, [selectedCrypto, timeGranularity]);
+
+  const processHistoricalData = (prices, granularity) => {
+    if (!prices || !Array.isArray(prices)) return null;
+
+    let labels;
+    if (granularity === 'hourly') {
+      labels = prices.map((entry) => new Date(entry[0]).toLocaleTimeString());
+    } else if (granularity === 'daily') {
+      labels = prices.map((entry) => new Date(entry[0]).toLocaleDateString());
+    } else {
+      labels = prices.map((entry) => new Date(entry[0]).toLocaleDateString());
+    }
+
     const values = prices.map((entry) => entry[1]);
 
     return {
       labels: labels,
       datasets: [
         {
-          label: 'Historical Data',
+          label: 'Price',
           data: values,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 2,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)', // Change the background color
+          borderColor: '#ba25e8',
+          borderWidth: 1.5,
         },
       ],
     };
   };
 
   useEffect(() => {
+    if (chartInstance) {
+      chartInstance.destroy();
+    }
     if (chartData) {
-      createChart();
+      const ctx = document.getElementById('historicalChart').getContext('2d');
+      const newChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              suggestedMin: Math.min(...chartData.datasets[0].data) - 10,
+              ticks: {
+                stepSize: 100, // Adjust the step size for the y-axis ticks
+                beginAtZero: true,
+              },
+            },
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+        },
+      });
+      setChartInstance(newChartInstance);
     }
   }, [chartData]);
 
-  const createChart = () => {
-    const ctx = document.getElementById('historicalChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      data: chartData,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            suggestedMin: 0,
-          },
-        },
-      },
-    });
+  const handleTimeGranularityChange = (event) => {
+    setTimeGranularity(event.target.value);
   };
 
-  const handleCoinChange = (event) => {
-    setSelectedCoin(event.target.value);
+  const handleCryptoChange = (event) => {
+    setSelectedCrypto(event.target.value);
   };
 
   return (
-    <div>
-      <h1>Cryptocurrency Charts</h1>
-      <div>
-        <label htmlFor="coinSelect">Select a cryptocurrency:</label>
-        <select id="coinSelect" value={selectedCoin} onChange={handleCoinChange}>
-          {coinList.map((coin) => (
-            <option key={coin.id} value={coin.id}>
-              {coin.name}
-            </option>
+    <div className="crypto-details">
+      <h1 style={{ textTransform: 'uppercase' }}>{cryptoDetails.name}</h1>
+      <div className="logo-container">
+        <img src={cryptoDetails.image?.large} alt={cryptoDetails.name} className="logo" />
+      </div>
+      <div className="details-container">
+        <div className="details-box">
+          <h2 style={{ fontWeight: 'bold', color: '#ba25e8' }}>CURRENT PRICE</h2>
+          <div className="details">
+            <p>${cryptoDetails.market_data?.current_price?.usd}</p>
+          </div>
+        </div>
+        <div className="details-box">
+          <h2 style={{ fontWeight: 'bold', color: '#ba25e8' }}>MARKET CAP</h2>
+          <div className="details">
+            <p>${cryptoDetails.market_data?.market_cap?.usd}</p>
+          </div>
+        </div>
+        <div className="details-box">
+          <h2 style={{ fontWeight: 'bold', color: '#ba25e8' }}>24H VOLUME</h2>
+          <div className="details">
+            <p>${cryptoDetails.market_data?.total_volume?.usd}</p>
+          </div>
+        </div>
+      </div>
+      <div className="time-granularity">
+        <p style={{ fontWeight: 'bold' }}>TIME FRAME</p>
+        <select id="timeGranularity" value={timeGranularity} onChange={handleTimeGranularityChange}>
+          <option value="hourly">HOURLY</option>
+          <option value="daily">DAILY</option>
+          <option value="weekly">WEEKLY</option>
+        </select>
+      </div>
+      <div className="crypto-dropdown">
+        <p style={{ fontWeight: 'bold' }}>SELECT CRYPTOCURRENCY</p>
+        <select id="cryptoDropdown" value={selectedCrypto} onChange={handleCryptoChange}>
+          <option value="">SELECT</option>
+          {cryptoList.map((crypto) => (
+            <option key={crypto.id} value={crypto.id}>{crypto.name.toUpperCase()}</option>
           ))}
         </select>
       </div>
-      <div style={{ width: '800px', height: '400px' }}>
+      <div className="chart-container">
         <canvas id="historicalChart"></canvas>
       </div>
     </div>
