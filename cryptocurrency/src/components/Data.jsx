@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNotification } from './NotificationContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Data.css';
 
-function Data({ addToWatchlist, watchlist = [] }) {
+function Data({ addToWatchlist, watchlist = [], storeNotificationInProfile }) {
   const [cryptoData, setCryptoData] = useState([]);
   const [thresholds, setThresholds] = useState({});
+  const { addNotification } = useNotification(); // Access addNotification function from NotificationContext
 
   // Fetch crypto data from API
   const fetchCryptoData = async () => {
@@ -15,6 +17,7 @@ function Data({ addToWatchlist, watchlist = [] }) {
         `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false`
       );
       const data = await response.json();
+      console.log("Fetched crypto data:", data); // Debugging statement
       setCryptoData(data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -26,6 +29,7 @@ function Data({ addToWatchlist, watchlist = [] }) {
 
     // Load thresholds from localStorage
     const savedThresholds = JSON.parse(localStorage.getItem('thresholds')) || {};
+    console.log("Loaded thresholds from localStorage:", savedThresholds); // Debugging statement
     setThresholds(savedThresholds);
 
     // Set up interval to periodically fetch data and check thresholds
@@ -50,12 +54,16 @@ function Data({ addToWatchlist, watchlist = [] }) {
   const handleAddToWatchlist = (crypto) => {
     addToWatchlist(crypto);
     toast.success(`${crypto.name} added to watchlist!`);
+    storeNotificationInProfile(`${crypto.name} added to watchlist.`);
+    addNotification({ message: `${crypto.name} added to watchlist.` });
   };
 
   const handleRemoveFromWatchlist = (crypto) => {
     const updatedWatchlist = watchlist.filter((item) => item.id !== crypto.id);
     addToWatchlist(updatedWatchlist);
     toast.info(`${crypto.name} removed from watchlist.`);
+    storeNotificationInProfile(`${crypto.name} removed from watchlist.`);
+    addNotification({ message: `${crypto.name} removed from watchlist.` });
   };
 
   const handleThresholdChange = (event, cryptoId) => {
@@ -75,6 +83,8 @@ function Data({ addToWatchlist, watchlist = [] }) {
     setThresholds(updatedThresholds);
     localStorage.setItem('thresholds', JSON.stringify(updatedThresholds));
     toast.success(`Threshold for ${cryptoId} set at $${threshold}`);
+    storeNotificationInProfile(`Threshold for ${cryptoId} set at $${threshold}`);
+    addNotification({ message: `Threshold for ${cryptoId} set at $${threshold}` });
   };
 
   const handleThresholdRemove = (cryptoId) => {
@@ -83,13 +93,20 @@ function Data({ addToWatchlist, watchlist = [] }) {
     setThresholds(updatedThresholds);
     localStorage.setItem('thresholds', JSON.stringify(updatedThresholds));
     toast.info(`Threshold for ${cryptoId} has been removed.`);
+    storeNotificationInProfile(`Threshold for ${cryptoId} has been removed.`);
+    addNotification({ message: `Threshold for ${cryptoId} has been removed.` });
   };
 
   const checkThresholds = () => {
+    console.log("Checking thresholds...");
     cryptoData.forEach((crypto) => {
       const threshold = thresholds[crypto.id];
+      console.log("Crypto:", crypto);
+      console.log("Threshold:", threshold);
       if (threshold && crypto.current_price > threshold) {
-        toast.info(`Price of ${crypto.name} has crossed your threshold of $${threshold}. Current price: $${crypto.current_price}`);
+        console.log("Notification triggered for:", crypto.name);
+        storeNotificationInProfile(`Price of ${crypto.name} has crossed your threshold of $${threshold}. Current price: $${crypto.current_price}`);
+        addNotification({ message: `Price of ${crypto.name} has crossed your threshold of $${threshold}. Current price: $${crypto.current_price}` });
       }
     });
   };
@@ -154,11 +171,11 @@ function Data({ addToWatchlist, watchlist = [] }) {
             ))}
           </tbody>
         </table>
-    ) : (
-      <p>Data cannot be loaded...</p>
-    )}
-  </div>
-);
+      ) : (
+        <p>Data cannot be loaded...</p>
+      )}
+    </div>
+  );
 }
 
 export default Data;

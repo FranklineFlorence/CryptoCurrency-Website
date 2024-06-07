@@ -1,4 +1,5 @@
-// components/UserProfilePage.jsx
+// UserProfilePage.jsx
+
 import React from 'react';
 import './UserProfilePage.css';
 import { useAuth } from './AuthContext';
@@ -36,12 +37,16 @@ const UserProfilePage = () => {
       ) : (
         <p>No user is logged in</p>
       )}
+      {/* Display stored notifications */}
       <div className="activity-history">
-        <h3>ACTIVITY HISTORY</h3>
+        <h3>Activity History</h3>
         <ul>
           {notifications.map((notification) => (
-            <li key={notification.id}>
-              {notification.message} at {notification.timestamp}
+            <li key={notification.id} className={`notification ${notification.type}`}>
+              <div className="notification-content">
+                <span className="timestamp">{notification.message.split('\n')[0]}</span>
+                <span className="message">{notification.message.split('\n')[1]}</span>
+              </div>
             </li>
           ))}
         </ul>

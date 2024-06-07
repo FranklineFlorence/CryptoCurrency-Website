@@ -1,34 +1,27 @@
-// components/NotificationContext.jsx
 import React, { createContext, useContext, useState } from 'react';
 
 export const NotificationContext = createContext();
+
+const formatTimestamp = () => {
+  const now = new Date();
+  const date = now.toLocaleDateString();
+  const time = now.toLocaleTimeString();
+  return `${date} ${time}`;
+};
 
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
   const addNotification = (notification) => {
     const id = Date.now();
-    setNotifications([...notifications, { ...notification, id }]);
-    
-    setTimeout(() => {
-      removeNotification(id);
-    }, 3000);
-  };
-
-  const removeNotification = (id) => {
-    setNotifications(notifications => notifications.filter(notification => notification.id !== id));
+    const timestamp = formatTimestamp();
+    const newNotification = `${timestamp}\n${notification.message}`;
+    setNotifications([...notifications, { id, message: newNotification }]);
   };
 
   return (
     <NotificationContext.Provider value={{ notifications, addNotification }}>
       {children}
-      <div className="notification-container">
-        {notifications.map((notification) => (
-          <div key={notification.id} className={`notification ${notification.type}`}>
-            {notification.message}
-          </div>
-        ))}
-      </div>
     </NotificationContext.Provider>
   );
 };

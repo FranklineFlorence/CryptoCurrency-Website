@@ -1,14 +1,19 @@
+// Watchlist.jsx
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useNotification} from './NotificationContext';
 
-function Watchlist({ watchlist, removeFromWatchlist }) {
+function Watchlist({ watchlist, removeFromWatchlist, storeNotificationInProfile }) {
+  const { addNotification } = useNotification(); // Access addNotification from NotificationContext
 
   const handleRemoveFromWatchlist = (crypto) => {
     removeFromWatchlist(crypto.id);
-    // Display notification using react-toastify
-    toast.info(`${crypto.name} removed from watchlist`);
+    toast.info(`${crypto.name} removed from watchlist.`);
+    storeNotificationInProfile(`${crypto.name} removed from watchlist.`);
+    addNotification({ message: `${crypto.name} removed from watchlist.` });
   };
 
   return (
