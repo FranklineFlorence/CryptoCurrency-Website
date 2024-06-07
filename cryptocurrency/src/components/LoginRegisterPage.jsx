@@ -1,17 +1,18 @@
-// components/LoginRegisterPage.jsx
 import React, { useState } from 'react';
 import './LoginRegisterPage.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNotification } from './NotificationContext';
-import { useAuth } from './AuthContext'; // Import the AuthContext
+import { useAuth } from './AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginRegisterPage = () => {
-  const { addNotification } = useNotification();
-  const { setCurrentUser } = useAuth(); // Get setCurrentUser from AuthContext
+  const { setCurrentUser } = useAuth();
   const [registeredUsers, setRegisteredUsers] = useState([]);
 
-  // Define Yup validation schema for registration form
+  const { addNotification } = useNotification();
+
   const registerValidationSchema = Yup.object().shape({
     name: Yup.string().required('Required'),
     email: Yup.string().email('Invalid email').required('Required'),
@@ -19,40 +20,38 @@ const LoginRegisterPage = () => {
     confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Required'),
   });
 
-  // Function to handle registration form submission
   const handleRegisterSubmit = (values, { setSubmitting, resetForm }) => {
     if (registeredUsers.find(user => user.email === values.email)) {
-      addNotification({ type: 'error', message: 'User already exists!' });
+      toast.error('User already exists!');
       setSubmitting(false);
       return;
     }
 
     setRegisteredUsers(prevUsers => [...prevUsers, values]);
-    addNotification({ type: 'success', message: 'User registered successfully!' });
+    toast.success('User registered successfully!');
     resetForm();
     setSubmitting(false);
   };
 
-  // Define Yup validation schema for login form
   const loginValidationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
     password: Yup.string().required('Required'),
   });
 
-  // Function to handle login form submission
   const handleLoginSubmit = (values, { setSubmitting }) => {
     const user = registeredUsers.find(user => user.email === values.email && user.password === values.password);
     if (user) {
-      addNotification({ type: 'success', message: 'Login successful!' });
-      setCurrentUser(user); // Set the current user
+      toast.success('Login successful!');
+      setCurrentUser(user);
     } else {
-      addNotification({ type: 'error', message: 'Invalid email or password!' });
+      toast.error('Invalid email or password!');
     }
     setSubmitting(false);
   };
 
   return (
     <div className="login-register-page">
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <div className="registration-section">
         <h2>REGISTER</h2>
         <Formik
@@ -63,23 +62,23 @@ const LoginRegisterPage = () => {
           {({ isSubmitting }) => (
             <Form>
               <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <Field type="text" name="name" />
+                <label htmlFor="registerName">Name</label>
+                <Field type="text" id="registerName" name="name" />
                 <ErrorMessage name="name" component="div" className="error" />
               </div>
               <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <Field type="email" name="email" />
+                <label htmlFor="registerEmail">Email</label>
+                <Field type="email" id="registerEmail" name="email" />
                 <ErrorMessage name="email" component="div" className="error" />
               </div>
               <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <Field type="password" name="password" />
+                <label htmlFor="registerPassword">Password</label>
+                <Field type="password" id="registerPassword" name="password" />
                 <ErrorMessage name="password" component="div" className="error" />
               </div>
               <div className="form-group">
                 <label htmlFor="confirmPassword">Confirm Password</label>
-                <Field type="password" name="confirmPassword" />
+                <Field type="password" id="confirmPassword" name="confirmPassword" />
                 <ErrorMessage name="confirmPassword" component="div" className="error" />
               </div>
               <button type="submit" disabled={isSubmitting}>
@@ -99,13 +98,13 @@ const LoginRegisterPage = () => {
           {({ isSubmitting }) => (
             <Form>
               <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <Field type="email" name="email" />
+                <label htmlFor="loginEmail">Email</label>
+                <Field type="email" id="loginEmail" name="email" />
                 <ErrorMessage name="email" component="div" className="error" />
               </div>
               <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <Field type="password" name="password" />
+                <label htmlFor="loginPassword">Password</label>
+                <Field type="password" id="loginPassword" name="password" />
                 <ErrorMessage name="password" component="div" className="error" />
               </div>
               <button type="submit" disabled={isSubmitting}>

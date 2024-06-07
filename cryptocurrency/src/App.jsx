@@ -1,5 +1,3 @@
-// src/App.jsx
-
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
@@ -15,6 +13,9 @@ import MarketDepthAnalysis from './components/MarketDepthAnalysis';
 import './App.css';
 import { NotificationProvider } from './components/NotificationContext';
 import { AuthProvider } from './components/AuthContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   const [watchlist, setWatchlist] = useState([]);
@@ -29,11 +30,10 @@ function App() {
     setWatchlist(watchlist.filter((crypto) => crypto.id !== id));
   };
 
+  // Define storeNotificationInProfile function
   const storeNotificationInProfile = (notification) => {
-    // Your implementation to store notification in profile
     console.log("Storing notification in profile:", notification);
-    // Implement your logic to store notification in user's profile
-    // e.g., make a request to your backend API to save the notification
+    // Implement your logic to store notification in user's profile if needed
   };
 
   return (
@@ -45,7 +45,6 @@ function App() {
             <main>
               <Routes>
                 <Route path="/" element={<MainPage />} />
-                {/* Pass storeNotificationInProfile as a prop to Data */}
                 <Route path="/data" element={<Data addToWatchlist={addToWatchlist} storeNotificationInProfile={storeNotificationInProfile} />} />
                 <Route path="/visual" element={<Visual />} />
                 <Route path="/watchlist" element={<Watchlist watchlist={watchlist} removeFromWatchlist={removeFromWatchlist} storeNotificationInProfile={storeNotificationInProfile} />} />
@@ -57,6 +56,7 @@ function App() {
                 <Route path="/market-depth" element={<MarketDepthAnalysis />} />
               </Routes>
             </main>
+            <ToastContainer />
           </div>
         </AuthProvider>
       </NotificationProvider>

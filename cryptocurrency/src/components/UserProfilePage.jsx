@@ -1,16 +1,34 @@
-// UserProfilePage.jsx
-
-import React from 'react';
+import React, { useState } from 'react';
 import './UserProfilePage.css';
 import { useAuth } from './AuthContext';
 import { useNotification } from './NotificationContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserProfilePage = () => {
-  const { currentUser } = useAuth(); // Get the current user from AuthContext
-  const { notifications } = useNotification(); // Get notifications from NotificationContext
+  const { currentUser, updateUser } = useAuth();
+  const { notifications, addNotification } = useNotification();
+  const [formData, setFormData] = useState({
+    fullname: currentUser ? currentUser.name : '',
+    password: ''
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleUpdateProfile = () => {
+    if (currentUser) {
+      const updatedUser = { ...currentUser, name: formData.fullname, password: formData.password };
+      updateUser(updatedUser);
+      toast.success('Profile updated successfully!');
+    }
+  };
 
   return (
     <div className="user-profile-page">
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <h2>USER PROFILE</h2>
       {currentUser ? (
         <div className="user-info">
@@ -24,14 +42,14 @@ const UserProfilePage = () => {
           </div>
           <div className="info-item">
             <label htmlFor="fullname">Full Name</label>
-            <input type="text" id="fullname" value={currentUser.name} />
+            <input type="text" id="fullname" value={formData.fullname} onChange={handleChange} />
           </div>
           <div className="info-item">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" />
+            <input type="password" id="password" value={formData.password} onChange={handleChange} />
           </div>
           <div className="info-item">
-            <button>UPDATE PROFILE</button>
+            <button onClick={handleUpdateProfile}>UPDATE PROFILE</button>
           </div>
         </div>
       ) : (
@@ -41,7 +59,7 @@ const UserProfilePage = () => {
       <div className="activity-history">
         <h3>Activity History</h3>
         <ul>
-          {notifications.map((notification) => (
+          {notifications.slice(0).reverse().map((notification) => ( // Reverse the order of notifications
             <li key={notification.id} className={`notification ${notification.type}`}>
               <div className="notification-content">
                 <span className="timestamp">{notification.message.split('\n')[0]}</span>
