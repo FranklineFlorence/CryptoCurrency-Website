@@ -13,7 +13,6 @@ import MarketDepthAnalysis from './components/MarketDepthAnalysis';
 import './App.css';
 import { NotificationProvider } from './components/NotificationContext';
 import { AuthProvider } from './components/AuthContext';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -56,7 +55,6 @@ function App() {
                 <Route path="/market-depth" element={<MarketDepthAnalysis />} />
               </Routes>
             </main>
-            <ToastContainer />
           </div>
         </AuthProvider>
       </NotificationProvider>

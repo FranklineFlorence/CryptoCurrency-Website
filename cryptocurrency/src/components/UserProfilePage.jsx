@@ -28,7 +28,7 @@ const UserProfilePage = () => {
 
   return (
     <div className="user-profile-page">
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+      {/* <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover /> */}
       <h2>USER PROFILE</h2>
       {currentUser ? (
         <div className="user-info">

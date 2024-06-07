@@ -51,7 +51,7 @@ const LoginRegisterPage = () => {
 
   return (
     <div className="login-register-page">
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+      {/* <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover /> */}
       <div className="registration-section">
         <h2>REGISTER</h2>
         <Formik
