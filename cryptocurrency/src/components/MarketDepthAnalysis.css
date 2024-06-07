@@ -4,7 +4,7 @@
 .market-depth-container {
   font-family: Arial, sans-serif;
   color: #ddd;
-  background-color: #1a1a1a;
+  background-color: black;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -40,4 +40,9 @@
   color: red;
   font-weight: bold;
   margin-top: 20px; /* Add space between error text and chart */
+}
+
+.market-depth-container p {
+  font-size: 16px;
+  color: #888;
 }

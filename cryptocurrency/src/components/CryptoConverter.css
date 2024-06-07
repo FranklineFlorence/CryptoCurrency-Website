@@ -1,11 +1,11 @@
 /* CryptoConverter.css */
-
 .crypto-converter {
   text-align: center;
   color: #ddd;
-  background-color: #1a1a1a;
+  background-color: #22222281;
   padding: 20px;
   border-radius: 10px;
+  border: 1px solid #ba25e8;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
   max-width: 500px;
@@ -137,6 +137,10 @@
   color: #ba25e8;
 }
 
+.result-display p {
+  color: white;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -145,3 +149,15 @@
     opacity: 1;
   }
 }
+
+.crypto-converter h1 {
+  font-size: 24px;
+  color: #ba25e8;
+  margin-bottom: 10px;
+}
+
+.crypto-converter p {
+  font-size: 16px;
+  color: #888;
+}
+

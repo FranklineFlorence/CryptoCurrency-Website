@@ -4,8 +4,11 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  background-color: #1f1b24;
+  background-color: black;
   color: #fff;
+  border-right :1px solid #ba25e8;
+  border-left: 1px solid #ba25e8;  
+
 }
 
 /* Styling for the cryptocurrency data table */
@@ -23,18 +26,18 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: #9b59b6; /* Background color of the sticky header */
+  background-color: #ba25e8; /* Background color of the sticky header */
 }
 
 .crypto-table th, 
 .crypto-table td {
-  border: 1px solid #9b59b6;
+  border: 1px solid #ba25e8;
   padding: 12px;
   text-align: center;
 }
 
 .crypto-table th {
-  background-color: #9b59b6;
+  background-color: #ba25e8;
   color: #fff;
   text-transform: uppercase;
   font-weight: bold;
@@ -49,7 +52,7 @@
 }
 
 .crypto-table tr:hover {
-  background-color: #9b59b6;
+  background-color: #7d47929a;
   color: #fff;
 }
 
@@ -70,12 +73,13 @@
 
 /* Header styling */
 .App-header {
-  background-color: #1f1b24;
+  background-color: black;
   padding: 20px;
+  border-bottom: 2px solid #ba25e8;
 }
 
 .App-header h1 {
-  color: #9b59b6;
+  color:#ba25e8;
   font-size: 2.5em;
 }
 
@@ -135,7 +139,7 @@
 }
 
 .set-button {
-  background-color: #9b59b6;
+  background-color: #0a0d8e;
   color: white;
   border: none;
   padding: 0.5rem 1rem;

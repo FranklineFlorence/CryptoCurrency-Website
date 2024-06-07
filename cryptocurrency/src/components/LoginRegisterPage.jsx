@@ -54,7 +54,7 @@ const LoginRegisterPage = () => {
   return (
     <div className="login-register-page">
       <div className="registration-section">
-        <h2>Register</h2>
+        <h2>REGISTER</h2>
         <Formik
           initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}
           validationSchema={registerValidationSchema}
@@ -63,34 +63,34 @@ const LoginRegisterPage = () => {
           {({ isSubmitting }) => (
             <Form>
               <div className="form-group">
-                <label htmlFor="name">Name:</label>
+                <label htmlFor="name">Name</label>
                 <Field type="text" name="name" />
                 <ErrorMessage name="name" component="div" className="error" />
               </div>
               <div className="form-group">
-                <label htmlFor="email">Email:</label>
+                <label htmlFor="email">Email</label>
                 <Field type="email" name="email" />
                 <ErrorMessage name="email" component="div" className="error" />
               </div>
               <div className="form-group">
-                <label htmlFor="password">Password:</label>
+                <label htmlFor="password">Password</label>
                 <Field type="password" name="password" />
                 <ErrorMessage name="password" component="div" className="error" />
               </div>
               <div className="form-group">
-                <label htmlFor="confirmPassword">Confirm Password:</label>
+                <label htmlFor="confirmPassword">Confirm Password</label>
                 <Field type="password" name="confirmPassword" />
                 <ErrorMessage name="confirmPassword" component="div" className="error" />
               </div>
               <button type="submit" disabled={isSubmitting}>
-                Register
+                REGISTER
               </button>
             </Form>
           )}
         </Formik>
       </div>
       <div className="login-section">
-        <h2>Login</h2>
+        <h2>LOGIN</h2>
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={loginValidationSchema}
@@ -99,17 +99,17 @@ const LoginRegisterPage = () => {
           {({ isSubmitting }) => (
             <Form>
               <div className="form-group">
-                <label htmlFor="email">Email:</label>
+                <label htmlFor="email">Email</label>
                 <Field type="email" name="email" />
                 <ErrorMessage name="email" component="div" className="error" />
               </div>
               <div className="form-group">
-                <label htmlFor="password">Password:</label>
+                <label htmlFor="password">Password</label>
                 <Field type="password" name="password" />
                 <ErrorMessage name="password" component="div" className="error" />
               </div>
               <button type="submit" disabled={isSubmitting}>
-                Login
+                LOGIN
               </button>
             </Form>
           )}

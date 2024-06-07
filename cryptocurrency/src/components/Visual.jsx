@@ -151,6 +151,11 @@ function Visual() {
   };
 
   return (
+    <div className="visual-page">
+      <div className="page-heading">
+        <h1>Visualise Cryptocurrency Data</h1>
+        <p>Visualise cryptocurrency data in various time frames and understand the market!</p>
+      </div>
     <div className="crypto-details">
       <h1 style={{ textTransform: 'uppercase' }}>{cryptoDetails.name}</h1>
       <div className="logo-container">
@@ -197,6 +202,7 @@ function Visual() {
       <div className="chart-container">
         <canvas id="historicalChart"></canvas>
       </div>
+    </div>
     </div>
   );
 }

@@ -47,10 +47,11 @@ const CryptoConverter = () => {
 
   return (
     <div className="crypto-converter">
-      <h2>Crypto Converter</h2>
+      <h1>Crypto Conversion and Analytics</h1>
+      <p>Perform real-time conversions between cryptocurrencies and fiat currencies, and access analytics tools to analyze market trends and make informed decisions</p>
       <div className="converter-inputs">
         <div className="input-group">
-          <label htmlFor="crypto">CRYPTO:</label>
+          <label htmlFor="crypto">CRYPTO</label>
           <select id="crypto" value={selectedCrypto} onChange={(e) => setSelectedCrypto(e.target.value)}>
             <option value="">SELECT</option>
             {cryptoList.map((crypto) => (
@@ -60,7 +61,7 @@ const CryptoConverter = () => {
           {selectedCrypto && <img src={cryptoList.find(crypto => crypto.id === selectedCrypto)?.image} alt="Crypto Logo" className="crypto-logo" />}
         </div>
         <div className="input-group">
-          <label htmlFor="currency">CURRENCY:</label>
+          <label htmlFor="currency">CURRENCY</label>
           <select id="currency" value={selectedCurrency} onChange={(e) => setSelectedCurrency(e.target.value)}>
             <option value="">SELECT</option>
             {fiatCurrencies.map((currency) => (
@@ -69,10 +70,10 @@ const CryptoConverter = () => {
           </select>
         </div>
         <div className="input-group">
-          <label htmlFor="amount">AMOUNT:</label>
+          <label htmlFor="amount">AMOUNT</label>
           <input type="number" id="amount" value={amount} onChange={(e) => setAmount(parseFloat(e.target.value))} />
         </div>
-        <button onClick={handleConversion}>Convert</button>
+        <button onClick={handleConversion}>CONVERT</button>
       </div>
       {result !== 0 && (
         <div className="conversion-result">

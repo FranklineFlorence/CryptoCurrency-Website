@@ -4,8 +4,9 @@
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #222;
+  background-color: #22222281;
   border-radius: 10px;
+  border: 1px solid #ba25e8;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -32,14 +33,15 @@
 .form-group input {
   width: calc(100% - 22px);
   padding: 10px;
-  border: 1px solid #ccc;
+  background-color: rgba(255, 255, 255, 0.911);
+  border: 1px solid;
   border-radius: 5px;
 }
 
 button {
   padding: 10px 20px;
   background-color: #ba25e8;
-  color: #fff;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -62,15 +64,14 @@ button:hover {
   margin-bottom: 10px;
   border-radius: 5px;
   color: white;
-  font-weight: bold;
   opacity: 1;
   transition: opacity 0.5s ease-out;
 }
 
 .notification.success {
-  background-color: green;
+  background-color: rgba(0, 128, 0, 0.877);
 }
 
 .notification.error {
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0.705);
 }

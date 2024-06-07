@@ -2,7 +2,7 @@
 .crypto-details {
   font-family: Arial, sans-serif;
   color: #ddd;
-  background-color: #1a1a1a;
+  background-color: black;
   padding: 20px;
   text-align: center;
 }
@@ -59,6 +59,27 @@
 }
 
 canvas {
-  background-color: #2f2f2f;
+  background-color: #1f1f1f;
   border-radius: 5px;
+}
+
+
+.visual-page {
+  padding: 20px;
+}
+
+.page-heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.page-heading h1 {
+  font-size: 24px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.page-heading p {
+  font-size: 16px;
+  color: #888;
 }

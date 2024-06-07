@@ -136,8 +136,9 @@ const MarketDepthAnalysis = () => {
   return (
     <div className="market-depth-container">
       <h2>Market Depth Analysis</h2>
+      <p>Explore the market depth of various cryptocurrencies to gain insights into buying and selling pressure</p>
       <div className="select-container">
-        <label htmlFor="coinSelect">COIN:</label>
+        <label htmlFor="coinSelect">COIN</label>
         <select id="coinSelect" value={coinId} onChange={handleCoinChange} className="crypto-dropdown">
           {topCoins.map((coin) => (
             <option key={coin.id} value={coin.id}>{coin.name.toUpperCase()}</option>
@@ -145,7 +146,7 @@ const MarketDepthAnalysis = () => {
         </select>
       </div>
       <div className="select-container">
-        <label htmlFor="intervalSelect">TIME INTERVAL:</label>
+        <label htmlFor="intervalSelect">TIME INTERVAL</label>
         <select id="intervalSelect" value={intervalDays} onChange={handleIntervalChange} className="time-granularity">
           <option value={1}>1 day</option>
           <option value={7}>7 days</option>

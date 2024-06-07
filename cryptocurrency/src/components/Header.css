@@ -1,7 +1,5 @@
-/* src/components/Header.css */
-
 .App-header {
-  background-color: #000;
+  background-color: black; /* 1. Background color is black latest*/
   padding: 20px;
   text-align: center;
   color: #ba25e8;
@@ -9,27 +7,56 @@
   top: 0;
   z-index: 1000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: #ba25e8;
 }
 
 .App-header h1 {
+  color: #ba25e8;
   font-size: 2.5em;
-  margin: 0;
-  color: #ba25e8;
 }
 
-nav {
-  margin-top: 20px;
+
+.brand-container {
+  display: flex;
+  align-items: center; /* Align items center */
+  justify-content: center; /* Align content center */
+  flex-direction: row; /* Arrange items horizontally */
+  margin-bottom: 10px; /* Add space between brand and menu */
 }
 
-nav a {
-  margin: 0 15px;
+.brand-logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px; /* Add space between logo and name */
+}
+
+.brand-name {
+  font-size: 24px;
+  color: #ba25e8; /* Blue */
+  margin: 0; /* Remove default margin */
+}
+
+.menu-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap; /* Wrap items to next row if necessary */
+  justify-content: center; /* Align items center */
+}
+
+.menu-item {
+  margin-right: 30px; /* Add space between menu items */
+}
+
+.menu-link {
   text-decoration: none;
-  color: #ba25e8;
-  font-size: 1.2em;
-  transition: color 0.3s ease, transform 0.3s ease;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  transition: color 0.3s;
 }
 
-nav a:hover {
-  color: #fff;
-  transform: scale(1.1);
+.menu-link:hover {
+  color: #ba25e8;
+  font-size: 19px;
 }
