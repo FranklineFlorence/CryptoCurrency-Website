@@ -2,12 +2,12 @@ List of Pages and Functionalities
 
 1. Home Page
 
-- Display a summary of top cryptocurrencies with price, percentage change, and market cap.
+🟢 Display a summary of top cryptocurrencies with price, percentage change, and market cap.
 🟢 Showcase the latest news or trends in the cryptocurrency market 
 
 2. Cryptocurrency Details Page
 
-- Provide detailed information about a specific cryptocurrency including current price, market cap, volume, historical price charts, and market depth analysis.
+🟢 Provide detailed information about a specific cryptocurrency including current price, market cap, volume, historical price charts, and market depth analysis.
 🟢 Allow users to add the cryptocurrency to their personalized watchlist
 
 3. Watchlist Page
@@ -27,12 +27,12 @@ List of Pages and Functionalities
 
 6. User Profile Page
 
-- Display user information and allow users to update their profile settings.
-- Show user's activity history (e.g., alerts set, watchlist changes).
+🟢 Display user information and allow users to update their profile settings.
+🟢 Show user's activity history (e.g., alerts set, watchlist changes).
 
 7. Login/Register Page
 
-- Provide authentication features including login, registration, and password reset.
+🟢 Provide authentication features including login, registration, and password reset.
 
 ??/////////////////////////////
 As mentioned in our historical data granularity article and our API documentation, please note that the granularity returned for Public, Analyst, Lite and Pro API plans are automatically determined and CANNOT be adjusted. 
@@ -98,18 +98,7 @@ Ethical data handling, user privacy, data integrity, security
 Stringent testing protocols
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+API Information:
 CoinGecko Endpoints: General
 Endpoint	Description
 /asset_platforms	Endpoint to query all the asset platforms on CoinGecko.
