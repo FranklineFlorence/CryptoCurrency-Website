@@ -105,7 +105,7 @@ I welcome contributions! To contribute:
 
 📩 Contact & Support
 
-For issues, feature requests, or feedback, reach out via GitHub Issues or email me at frankline.florence@outlook.com
+For issues, feature requests, or feedback, reach out via GitHub Issues or email me at  frankline.florence@outlook.com
 
 🌟 If you like this project, don't forget to star ⭐ the repository!
 
